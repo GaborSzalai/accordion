@@ -1,0 +1,177 @@
+<html>
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-animate.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-aria.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-messages.min.js"></script>
+
+  <!-- Angular Material Library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.js"></script>
+ 
+</head>
+
+<style>
+
+.md-ink-ripple {
+font-family: "Exo 2";
+}
+
+.md-select-icon {
+color: orange !important;
+}
+
+md-input-container {
+    margin-right: 10px;
+    background-color: #002A4C;
+    width: 251;
+	color:white;
+	margin:0px !important;
+}
+
+md-select-value{
+color:white !important;
+font-family: "Exo 2" !important;
+margin-left: 10px;
+}
+
+.md-accordion .expandCollapse:after {
+  opacity:1;
+  content: '\02795';
+  margin-left:-3px;
+}
+
+.md-accordion .active:after {
+    content: "\2796"; /* Unicode character for "minus" sign (-) */
+}
+
+.md-toolbar-tools {
+background-color: #001831;
+width: 250px !important;
+height: 50px !important;
+font-size: 14px !important;
+text-align: left;
+font-family: "Exo 2";
+margin: 5px !important;
+cursor:pointer;
+}
+
+md-toolbar._md-toolbar-transitions {
+background-color: #001831;
+width: 260px !important;
+height: 50px !important;
+font-size: 10px !important;
+text-align: left;
+font-family: "Exo 2";
+margin: -5px !important;
+}
+
+.md-toolbar-tools h2 {
+top: 35% !important;
+margin-left: 5px !important;
+width: 205px;
+}
+
+
+.md-accordion .dataContent {
+  background-color: #F2F2F2;
+  height:0px;
+  width: 205px;
+  overflow:hidden;
+  -webkit-transition: .3s all ease-out;
+  transition: .3s all ease-out;
+}
+
+.md-accordion .activeContent {
+  width: 215px; 	
+  height:auto;
+  padding:20px;
+  display:block;
+  margin-top:0px;
+  font-family: "Exo 2";
+  font-size: 14px;
+  color: #39BCF3;
+  background-color: #002A4C;
+  line-height: 5px;
+}
+
+
+</style>
+ <!-- Angular Material style sheet -->
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.css">
+<script>
+
+var app = angular.module('MyApp', ['ngMaterial', 'ngMessages'])
+
+app.controller('AppCtrl', function($scope) {		
+	
+	
+	ls1 = ([
+		{
+			"heading" : "Network & Processes Experience",
+			"content": ["Ingredient 1", "Ingredient 2", "Ingredient 3","Ingredient 4"]
+		},
+		{
+			"heading" : "Touchpoint & Processes Experience",
+			"content": ["Ingredient 1","Ingredient 2", "Ingredient 3", "Ingredient 4","Ingredient 5"]
+		},
+		{
+			"heading" : "Service Portfolio",
+			"content": ["Ingredient 1","Ingredient 2", "Ingredient 3"]
+		},
+		
+	]);
+	
+	ls2 = ([
+		{
+			"heading" : "Customer Aquisition",
+			"content": ["Ingredient 1","Ingredient 2", "Ingredient 3"]
+		},
+		{
+			"heading" : "Customer Tenure",
+			"content": ["Ingredient 1", "Ingredient 2", "Ingredient 3","Ingredient 4"]
+		},
+		{
+			"heading" : "Renewal",
+			"content": ["Ingredient 1","Ingredient 2", "Ingredient 3", "Ingredient 4","Ingredient 5"]
+		}
+	]);
+	
+	$scope.select_list = function(view){
+		if (view == "By Subindex" || typeof(view) == 'undefined') {return ls1
+		} else {return ls2
+	}
+	}
+	
+});
+
+</script>
+
+<body ng-app="MyApp" ng-cloak="" ng-controller="AppCtrl">
+
+<md-input-container style="margin-right: 10px;">
+        <label>Select View</label>
+        <md-select ng-model="view" placeholder="By Subindex" ng-value:"By Subindex">
+         <md-option value="By Subindex">By Subindex</md-option>
+         <md-option value="By Journey">By Journey</md-option>
+        </md-select>
+      </md-input-container>
+
+<div ng-cloak="" class="toolbardemoBasicUsage">
+	<md-content>
+		<div class="md-accordion" ng-repeat="data in select_list(view)">
+			<md-toolbar ng-init="data.expanded = false" ng-click="data.expanded = !data.expanded">
+				<div class="md-toolbar-tools">
+					<h2>
+					{{data.heading}}   (<b><font color="orange">{{data.content.length}}</font></b>)
+					</h2>
+				<span flex=""></span>
+					<span ng-class="{expandCollapse:true, active:data.expanded}"></span> 
+				</div>
+			</md-toolbar>
+			<div ng-class="{dataContent:true, activeContent:data.expanded}"ng-repeat="item in data.content">{{item}}<br></div>
+		</div>
+	</md-content>
+</div>
+
+</body>
+</html>
